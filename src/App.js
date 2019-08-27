@@ -1,26 +1,29 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+import {weatherFetch} from './actions'
+import {connect} from 'react-redux';
+import WeatherList from './Components/Weather/WeatherList'
+
+class App extends React.Component {
+    render() {
+        return (
+            <React.Fragment>
+                <div className="button-container">
+                    <button className="weather-button" type="button" onClick={this.props.weatherFetch}>Get Weather information</button>
+                </div>
+                <div className="container">
+                    <WeatherList weathers={this.props.weathers}/>
+                </div>
+            </React.Fragment>
+        )
+    }
 }
 
-export default App;
+
+const mapStateToProps = (state) => ({
+    weathers: state.weathers
+});
+
+
+export default connect(mapStateToProps, {weatherFetch})(App);
